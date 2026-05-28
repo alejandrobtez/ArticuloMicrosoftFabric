@@ -423,19 +423,10 @@
 
 <p>El resultado es un sistema donde puedes ver en directo cómo avanza la clasificación de la liga, quién lidera la tabla de goleadores y qué equipos acumulan más tarjetas, todo actualizado automáticamente cada 30 segundos mientras el simulador está generando partidos.</p>
 
-<!-- *** IMAGEN 1 ***
-     Añade aquí una captura del Real-Time Dashboard en funcionamiento.
-     Debería mostrar el dashboard completo con los tiles de clasificación,
-     goleadores, partidos en vivo y el gráfico de evolución del Top 5.
-     Tamaño recomendado: 1400 x 800 px aprox.
--->
-<div class="img-slot">
-  <div class="img-slot-body">
-    <span class="img-slot-label">[ IMAGEN 1 ] — Real-Time Dashboard en funcionamiento</span>
-    <span class="img-slot-desc">Captura del dashboard con los tiles de clasificación, goleadores y partidos en vivo</span>
-  </div>
-  <div class="img-slot-caption">Vista del Real-Time Dashboard de Fabric con los datos de la jornada actualizándose en tiempo real.</div>
-</div>
+<figure style="margin:36px 0;">
+  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/483a5990abbf4ff05487042dee5eb59c908dac2e/img/data-report.png" alt="Real-Time Dashboard en funcionamiento" style="width:100%;display:block;border:1px solid #D8EDE2;">
+  <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">Vista del Real-Time Dashboard de Fabric con los datos de la jornada actualizándose en tiempo real.</figcaption>
+</figure>
 
 
 <!-- ════════════════════════════════════════
@@ -449,19 +440,10 @@
 
 <p>Lo que utilizamos en concreto es la capacidad de <strong>Real-Time Intelligence</strong> de Fabric, el conjunto de herramientas diseñado para trabajar con datos que llegan de forma continua: ingesta en streaming, almacenamiento analítico de baja latencia y visualización en tiempo real.</p>
 
-<!-- *** IMAGEN 2 ***
-     Añade aquí una captura del Workspace de Fabric mostrando todos los recursos del proyecto.
-     Debería verse el Eventhouse, el Eventstream, el Notebook y el Real-Time Dashboard
-     listados en el workspace "Liga-Futbol-RTI".
-     Tamaño recomendado: 1400 x 700 px aprox.
--->
-<div class="img-slot">
-  <div class="img-slot-body">
-    <span class="img-slot-label">[ IMAGEN 2 ] — Workspace de Fabric con todos los recursos</span>
-    <span class="img-slot-desc">Captura del workspace mostrando el Eventhouse, Eventstream, Notebook y Dashboard</span>
-  </div>
-  <div class="img-slot-caption">El workspace "Liga-Futbol-RTI" con todos los componentes del proyecto agrupados en un mismo lugar.</div>
-</div>
+<figure style="margin:36px 0;">
+  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/483a5990abbf4ff05487042dee5eb59c908dac2e/img/resources.png" alt="Workspace de Fabric con todos los recursos" style="width:100%;display:block;border:1px solid #D8EDE2;">
+  <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">El workspace "Liga-Futbol-RTI" con todos los componentes del proyecto agrupados en un mismo lugar.</figcaption>
+</figure>
 
 <div class="callout">
   <p><strong>Trial gratuito.</strong> Puedes activar el trial de 60 dias de Microsoft Fabric en app.fabric.microsoft.com con una cuenta de Microsoft. No requiere suscripcion de Azure ni tarjeta de credito. Es suficiente para montar este proyecto completo.</p>
@@ -589,19 +571,10 @@
   </li>
 </ul>
 
-<!-- *** IMAGEN 3 ***
-     Añade aquí una captura del Eventstream con el pipeline funcionando.
-     Debería mostrar los tres nodos (python-simulator, es_liga-futbol-stream, Eventhouse)
-     todos marcados como "Active" con el indicador verde.
-     Tamaño recomendado: 1400 x 600 px aprox.
--->
-<div class="img-slot">
-  <div class="img-slot-body">
-    <span class="img-slot-label">[ IMAGEN 3 ] — Eventstream con el pipeline activo</span>
-    <span class="img-slot-desc">Captura mostrando los tres nodos activos: python-simulator, Eventstream y Eventhouse, todos en estado Active</span>
-  </div>
-  <div class="img-slot-caption">El Eventstream con los tres nodos del pipeline activos. Los datos fluyen de izquierda a derecha en tiempo real.</div>
-</div>
+<figure style="margin:36px 0;">
+  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/483a5990abbf4ff05487042dee5eb59c908dac2e/img/eventstream.png" alt="Eventstream con los tres nodos activos" style="width:100%;display:block;border:1px solid #D8EDE2;">
+  <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">El Eventstream con los tres nodos del pipeline activos. Los datos fluyen de izquierda a derecha en tiempo real.</figcaption>
+</figure>
 
 
 <!-- ════════════════════════════════════════
@@ -681,19 +654,10 @@
   </div>
 </div>
 
-<!-- *** IMAGEN 4 ***
-     Añade aquí una captura del Notebook de Fabric ejecutándose.
-     Debería mostrar el output de la Celda 4 con los logs de eventos enviándose:
-     las líneas con [GOL], [ASISTENCIA], [TARJETA] y los marcadores de cada partido.
-     Tamaño recomendado: 1400 x 700 px aprox.
--->
-<div class="img-slot">
-  <div class="img-slot-body">
-    <span class="img-slot-label">[ IMAGEN 4 ] — Notebook ejecutándose con los eventos en tiempo real</span>
-    <span class="img-slot-desc">Captura del output del Notebook mostrando los logs de eventos: GOL, ASISTENCIA, TARJETA y FINAL</span>
-  </div>
-  <div class="img-slot-caption">El Notebook generando y enviando eventos. Cada linea representa un mensaje JSON enviado al Event Hub.</div>
-</div>
+<figure style="margin:36px 0;">
+  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/483a5990abbf4ff05487042dee5eb59c908dac2e/img/simulation-outputs.png" alt="Notebook ejecutándose con los eventos en tiempo real" style="width:100%;display:block;border:1px solid #D8EDE2;">
+  <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">El Notebook generando y enviando eventos. Cada linea representa un mensaje JSON enviado al Event Hub.</figcaption>
+</figure>
 
 
 <!-- ════════════════════════════════════════
@@ -807,19 +771,10 @@
 
 <p>Creamos tres vistas materializadas: <span class="badge">GoleadoresAcum</span>, <span class="badge">AsistenciasAcum</span> y <span class="badge">TarjetasAcum</span>. Todas se crean con el parametro <span class="badge">backfill=true</span>, que indica a Fabric que al crear la vista procese tambien todos los datos historicos que ya existian en la tabla, no solo los nuevos.</p>
 
-<!-- *** IMAGEN 5 ***
-     Añade aquí una captura del KQL Queryset mostrando las vistas materializadas.
-     Debería verse el panel izquierdo con las "Materialized views" desplegadas
-     y las tres vistas listadas (GoleadoresAcum, AsistenciasAcum, TarjetasAcum).
-     Tamaño recomendado: 1400 x 700 px aprox.
--->
-<div class="img-slot">
-  <div class="img-slot-body">
-    <span class="img-slot-label">[ IMAGEN 5 ] — KQL Queryset con las vistas materializadas</span>
-    <span class="img-slot-desc">Captura del KQL Queryset con el panel izquierdo mostrando las tres vistas materializadas creadas</span>
-  </div>
-  <div class="img-slot-caption">El KQL Queryset con las vistas materializadas en el panel de navegacion izquierdo.</div>
-</div>
+<figure style="margin:36px 0;">
+  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/483a5990abbf4ff05487042dee5eb59c908dac2e/img/kql-views.png" alt="KQL Queryset con las vistas materializadas" style="width:100%;display:block;border:1px solid #D8EDE2;">
+  <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">El KQL Queryset con las vistas materializadas en el panel de navegacion izquierdo.</figcaption>
+</figure>
 
 
 <!-- ════════════════════════════════════════
@@ -847,19 +802,10 @@
   <p>Con el dashboard abierto en una pestana y el Notebook ejecutandose en otra, los tiles cambian visiblemente cada 30 segundos. La clasificacion se reordena segun los resultados y los goleadores escalan posiciones en tiempo real. Es el momento mas visual del proyecto.</p>
 </div>
 
-<!-- *** IMAGEN 6 ***
-     Añade aquí una captura del Real-Time Dashboard en modo Vista (no edición)
-     mostrando datos reales de la simulación. Debería verse la clasificación con
-     equipos y puntos, los goleadores con nombres y el gráfico de evolución.
-     Tamaño recomendado: 1600 x 900 px aprox. (la más importante del artículo)
--->
-<div class="img-slot">
-  <div class="img-slot-body">
-    <span class="img-slot-label">[ IMAGEN 6 ] — Dashboard con datos reales de la simulación (imagen principal)</span>
-    <span class="img-slot-desc">Captura en modo Vista del dashboard completo con clasificacion, goleadores, grafico de evolucion y tiles de stats. Esta es la imagen mas importante del articulo.</span>
-  </div>
-  <div class="img-slot-caption">El Real-Time Dashboard con datos reales de la simulacion. Todos los tiles se actualizan automaticamente cada 30 segundos.</div>
-</div>
+<figure style="margin:36px 0;">
+  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/bdb31ad9aa5781e0cd54ce6a27cfba3c6ff505ce/img/data-report2.png" alt="Dashboard de partidos en directo con resultados y estadísticas en vivo" style="width:100%;display:block;border:1px solid #D8EDE2;">
+  <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">Dashboard de partidos en directo: porcentaje de eventos por tipo, resultados en juego y partidos finalizados, todo actualizandose cada 30 segundos.</figcaption>
+</figure>
 
 
 <!-- ════════════════════════════════════════
