@@ -405,6 +405,13 @@
     Un proyecto práctico para entender de verdad qué es el streaming de datos, por qué Microsoft Fabric cambia las reglas del juego y cómo KQL no es tan distinto de lo que ya conoces.
   </p>
 
+  <div class="article-chips">
+    <span class="chip blue">Real-Time Intelligence</span>
+    <span class="chip blue">KQL</span>
+    <span class="chip">Python</span>
+    <span class="chip">PySpark</span>
+    <span class="chip">Para principiantes</span>
+  </div>
 </header>
 
 
@@ -424,7 +431,7 @@
 <p>El resultado es un sistema donde puedes ver en directo cómo avanza la clasificación de la liga, quién lidera la tabla de goleadores y qué equipos acumulan más tarjetas, todo actualizado automáticamente cada 30 segundos mientras el simulador está generando partidos.</p>
 
 <figure style="margin:36px 0;">
-  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/483a5990abbf4ff05487042dee5eb59c908dac2e/img/data-report.png" alt="Real-Time Dashboard en funcionamiento" style="width:100%;display:block;border:1px solid #D8EDE2;">
+  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/main/img/data-report.png" alt="Real-Time Dashboard en funcionamiento" style="width:100%;display:block;border:1px solid #D8EDE2;">
   <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">Vista del Real-Time Dashboard de Fabric con los datos de la jornada actualizándose en tiempo real.</figcaption>
 </figure>
 
@@ -441,7 +448,7 @@
 <p>Lo que utilizamos en concreto es la capacidad de <strong>Real-Time Intelligence</strong> de Fabric, el conjunto de herramientas diseñado para trabajar con datos que llegan de forma continua: ingesta en streaming, almacenamiento analítico de baja latencia y visualización en tiempo real.</p>
 
 <figure style="margin:36px 0;">
-  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/483a5990abbf4ff05487042dee5eb59c908dac2e/img/resources.png" alt="Workspace de Fabric con todos los recursos" style="width:100%;display:block;border:1px solid #D8EDE2;">
+  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/main/img/resources.png" alt="Workspace de Fabric con todos los recursos" style="width:100%;display:block;border:1px solid #D8EDE2;">
   <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">El workspace "Liga-Futbol-RTI" con todos los componentes del proyecto agrupados en un mismo lugar.</figcaption>
 </figure>
 
@@ -572,7 +579,7 @@
 </ul>
 
 <figure style="margin:36px 0;">
-  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/483a5990abbf4ff05487042dee5eb59c908dac2e/img/eventstream.png" alt="Eventstream con los tres nodos activos" style="width:100%;display:block;border:1px solid #D8EDE2;">
+  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/main/img/eventstream.png" alt="Eventstream con los tres nodos activos" style="width:100%;display:block;border:1px solid #D8EDE2;">
   <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">El Eventstream con los tres nodos del pipeline activos. Los datos fluyen de izquierda a derecha en tiempo real.</figcaption>
 </figure>
 
@@ -655,7 +662,7 @@
 </div>
 
 <figure style="margin:36px 0;">
-  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/483a5990abbf4ff05487042dee5eb59c908dac2e/img/simulation-outputs.png" alt="Notebook ejecutándose con los eventos en tiempo real" style="width:100%;display:block;border:1px solid #D8EDE2;">
+  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/main/img/simulation-outputs.png" alt="Notebook ejecutándose con los eventos en tiempo real" style="width:100%;display:block;border:1px solid #D8EDE2;">
   <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">El Notebook generando y enviando eventos. Cada linea representa un mensaje JSON enviado al Event Hub.</figcaption>
 </figure>
 
@@ -772,7 +779,7 @@
 <p>Creamos tres vistas materializadas: <span class="badge">GoleadoresAcum</span>, <span class="badge">AsistenciasAcum</span> y <span class="badge">TarjetasAcum</span>. Todas se crean con el parametro <span class="badge">backfill=true</span>, que indica a Fabric que al crear la vista procese tambien todos los datos historicos que ya existian en la tabla, no solo los nuevos.</p>
 
 <figure style="margin:36px 0;">
-  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/483a5990abbf4ff05487042dee5eb59c908dac2e/img/kql-views.png" alt="KQL Queryset con las vistas materializadas" style="width:100%;display:block;border:1px solid #D8EDE2;">
+  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/main/img/kql-views.png" alt="KQL Queryset con las vistas materializadas" style="width:100%;display:block;border:1px solid #D8EDE2;">
   <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">El KQL Queryset con las vistas materializadas en el panel de navegacion izquierdo.</figcaption>
 </figure>
 
@@ -803,7 +810,7 @@
 </div>
 
 <figure style="margin:36px 0;">
-  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/bdb31ad9aa5781e0cd54ce6a27cfba3c6ff505ce/img/data-report2.png" alt="Dashboard de partidos en directo con resultados y estadísticas en vivo" style="width:100%;display:block;border:1px solid #D8EDE2;">
+  <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/main/img/data-report2.png" alt="Dashboard de partidos en directo con resultados y estadísticas en vivo" style="width:100%;display:block;border:1px solid #D8EDE2;">
   <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">Dashboard de partidos en directo: porcentaje de eventos por tipo, resultados en juego y partidos finalizados, todo actualizandose cada 30 segundos.</figcaption>
 </figure>
 
