@@ -1,0 +1,1154 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liga de Fútbol en Tiempo Real con Microsoft Fabric</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  :root {
+    --white:   #ffffff;
+    --off:     #F5FAF7;
+    --border:  #D8EDE2;
+    --text:    #1A2420;
+    --muted:   #6B8A78;
+    --light:   #9BB8A8;
+    --blue:    #107C41;
+    --blue2:   #1A9E55;
+    --blue-bg: #EAF5EE;
+    --dark:    #0D2018;
+    --serif:   'DM Serif Display', Georgia, serif;
+    --sans:    'DM Sans', system-ui, sans-serif;
+  }
+ 
+  body {
+    background: var(--white);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 56px 28px 96px;
+  }
+ 
+  /* ── HEADER ── */
+  .article-header { margin-bottom: 52px; }
+ 
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .meta-category {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--blue);
+    border-bottom: 2px solid var(--blue);
+    padding-bottom: 2px;
+  }
+  .meta-divider { width: 1px; height: 14px; background: var(--border); }
+  .meta-date { font-size: 13px; color: var(--muted); }
+  .meta-read { font-size: 13px; color: var(--muted); }
+ 
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(30px, 5vw, 48px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--dark);
+    margin-bottom: 20px;
+    letter-spacing: -.01em;
+  }
+  h1 em { font-style: italic; color: var(--blue); }
+ 
+  .article-lead {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--muted);
+    font-weight: 300;
+    border-left: 3px solid var(--blue);
+    padding-left: 20px;
+    margin-bottom: 32px;
+  }
+ 
+  .article-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .chip {
+    background: var(--off);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+  .chip.blue { background: var(--blue-bg); border-color: #B8DEC8; color: var(--blue); }
+ 
+  /* ── SECTION HEADINGS ── */
+  h2 {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--dark);
+    margin: 60px 0 16px;
+    line-height: 1.25;
+    letter-spacing: -.01em;
+  }
+  h3 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 36px 0 10px;
+  }
+ 
+  /* ── BODY TEXT ── */
+  p { color: #3A4560; margin-bottom: 18px; font-size: 15.5px; line-height: 1.8; }
+  p strong { color: var(--dark); font-weight: 600; }
+  p em { font-style: italic; }
+ 
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    margin: 40px 0;
+    padding: 28px 32px;
+    background: var(--off);
+    border-left: 4px solid var(--dark);
+  }
+  .pull-quote p {
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--dark);
+    margin: 0;
+    font-style: italic;
+  }
+ 
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--blue-bg);
+    border: 1px solid #B8DEC8;
+    border-left: 4px solid var(--blue);
+    padding: 18px 22px;
+    margin: 28px 0;
+  }
+  .callout p { margin: 0; font-size: 14px; color: #1A4A30; }
+  .callout p strong { color: #0D3022; }
+ 
+  /* ── IMAGE SLOTS ── */
+  .img-slot {
+    border: 1px solid var(--border);
+    background: var(--off);
+    padding: 0;
+    margin: 36px 0;
+    overflow: hidden;
+  }
+  .img-slot-body {
+    padding: 48px 24px;
+    text-align: center;
+    border: 2px dashed var(--border);
+    margin: 12px;
+  }
+  .img-slot-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    display: block;
+  }
+  .img-slot-desc { font-size: 12px; color: var(--muted); display: block; }
+  .img-slot-caption {
+    padding: 10px 18px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    font-style: italic;
+  }
+ 
+  /* ── STEPS ── */
+  .steps { list-style: none; display: flex; flex-direction: column; gap: 0; margin: 24px 0 32px; }
+  .steps li {
+    display: flex;
+    gap: 0;
+    border-left: 1px solid var(--border);
+    margin-left: 14px;
+    padding-bottom: 28px;
+    position: relative;
+  }
+  .steps li:last-child { padding-bottom: 0; border-left-color: transparent; }
+  .step-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    position: absolute;
+    left: -14px;
+    top: 0;
+  }
+  .step-body { padding-left: 26px; padding-top: 3px; }
+  .step-body strong { color: var(--dark); font-size: 15px; display: block; margin-bottom: 4px; }
+  .step-body p { margin: 0; font-size: 14px; color: var(--muted); }
+ 
+  /* ── GRID ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0 28px; }
+  @media(max-width: 560px) { .grid2 { grid-template-columns: 1fr; } }
+  .card {
+    border: 1px solid var(--border);
+    padding: 20px 22px;
+    background: var(--white);
+  }
+  .card-title { font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
+  .card p { margin: 0; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .card.blue-bg { background: var(--blue-bg); border-color: #B8DEC8; }
+  .card.blue-bg .card-title { color: var(--blue); }
+  .card.blue-bg p { color: #1A4A30; }
+ 
+  /* ── CODE ── */
+  .code-wrap {
+    margin: 20px 0 32px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  .code-header {
+    background: var(--off);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .code-title { font-size: 12px; color: var(--muted); margin-left: 6px; font-family: 'Courier New', monospace; }
+  .code-body {
+    background: #0D1524;
+    padding: 22px 24px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.9;
+    overflow-x: auto;
+    color: #A8B8D0;
+  }
+  .code-body .kw  { color: #5BC08A; }
+  .code-body .str { color: #A8D5A2; }
+  .code-body .cm  { color: #4A5A72; }
+  .code-body .num { color: #F4B77A; }
+ 
+  /* ── BADGE ── */
+  .badge {
+    display: inline-block;
+    background: var(--off);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 1px 7px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    vertical-align: middle;
+  }
+ 
+  /* ── COMPARE TABLE ── */
+  .compare {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0 32px;
+    font-size: 14px;
+  }
+  .compare thead th {
+    background: var(--dark);
+    color: #fff;
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+  .compare tbody tr:nth-child(even) td { background: var(--off); }
+  .compare tbody td {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    color: #3A4560;
+    vertical-align: top;
+  }
+  .compare tbody td:first-child { font-weight: 600; color: var(--dark); white-space: nowrap; }
+  .compare tbody td.hl { color: var(--blue); font-weight: 500; }
+ 
+  /* ── TECH GRID ── */
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin: 20px 0 32px;
+  }
+  @media(max-width: 500px) { .tech-grid { grid-template-columns: repeat(2, 1fr); } }
+  .tech-item {
+    background: var(--white);
+    padding: 18px 20px;
+  }
+  .tech-name { font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 3px; }
+  .tech-desc { font-size: 12px; color: var(--muted); }
+ 
+  /* ── TAGS ── */
+  .tags { display: flex; gap: 6px; flex-wrap: wrap; margin: 16px 0 32px; }
+  .tag {
+    background: var(--off);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11.5px;
+    padding: 3px 10px;
+    border-radius: 3px;
+  }
+ 
+  /* ── DIVIDER ── */
+  hr { border: none; border-top: 1px solid var(--border); margin: 52px 0; }
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 52px 0 0;
+    color: var(--light);
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  .section-divider::before, .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+ 
+  /* ── FIRMA ── */
+  .firma {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 28px 0;
+    border-top: 2px solid var(--dark);
+    margin-top: 52px;<br>
+  }
+  .firma-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--dark);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif);
+    font-size: 18px;
+    color: #fff;
+    flex-shrink: 0;
+    letter-spacing: .02em;
+  }
+  .firma-name {
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+  .firma-role { font-size: 12.5px; color: var(--muted); }
+ 
+  /* ── SVG DIAGRAM ── */
+  .diagram-wrap {
+    border: 1px solid var(--border);
+    background: var(--off);
+    padding: 8px;
+    margin: 32px 0;
+    overflow-x: auto;
+  }
+  .diagram-wrap svg { display: block; }
+</style>
+
+
+ 
+<!-- ════════════════════════════════════════
+     CABECERA DEL ARTÍCULO<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liga de Fútbol en Tiempo Real con Microsoft Fabric</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&amp;family=DM+Sans:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  :root {
+    --white:   #ffffff;
+    --off:     #F5FAF7;
+    --border:  #D8EDE2;
+    --text:    #1A2420;
+    --muted:   #6B8A78;
+    --light:   #9BB8A8;
+    --blue:    #107C41;
+    --blue2:   #1A9E55;
+    --blue-bg: #EAF5EE;
+    --dark:    #0D2018;
+    --serif:   'DM Serif Display', Georgia, serif;
+    --sans:    'DM Sans', system-ui, sans-serif;
+  }
+ 
+  body {
+    background: var(--white);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.8;
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 56px 28px 96px;
+  }
+ 
+  /* ── HEADER ── */
+  .article-header { margin-bottom: 52px; }
+ 
+  .article-meta {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .meta-category {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--blue);
+    border-bottom: 2px solid var(--blue);
+    padding-bottom: 2px;
+  }
+  .meta-divider { width: 1px; height: 14px; background: var(--border); }
+  .meta-date { font-size: 13px; color: var(--muted); }
+  .meta-read { font-size: 13px; color: var(--muted); }
+ 
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(30px, 5vw, 48px);
+    font-weight: 400;
+    line-height: 1.15;
+    color: var(--dark);
+    margin-bottom: 20px;
+    letter-spacing: -.01em;
+  }
+  h1 em { font-style: italic; color: var(--blue); }
+ 
+  .article-lead {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--muted);
+    font-weight: 300;
+    border-left: 3px solid var(--blue);
+    padding-left: 20px;
+    margin-bottom: 32px;
+  }
+ 
+  .article-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .chip {
+    background: var(--off);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 500;
+    padding: 4px 12px;
+    border-radius: 4px;
+  }
+  .chip.blue { background: var(--blue-bg); border-color: #B8DEC8; color: var(--blue); }
+ 
+  /* ── SECTION HEADINGS ── */
+  h2 {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--dark);
+    margin: 60px 0 16px;
+    line-height: 1.25;
+    letter-spacing: -.01em;
+  }
+  h3 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin: 36px 0 10px;
+  }
+ 
+  /* ── BODY TEXT ── */
+  p { color: #3A4560; margin-bottom: 18px; font-size: 15.5px; line-height: 1.8; }
+  p strong { color: var(--dark); font-weight: 600; }
+  p em { font-style: italic; }
+ 
+  /* ── PULL QUOTE ── */
+  .pull-quote {
+    margin: 40px 0;
+    padding: 28px 32px;
+    background: var(--off);
+    border-left: 4px solid var(--dark);
+  }
+  .pull-quote p {
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.55;
+    color: var(--dark);
+    margin: 0;
+    font-style: italic;
+  }
+ 
+  /* ── CALLOUT ── */
+  .callout {
+    background: var(--blue-bg);
+    border: 1px solid #B8DEC8;
+    border-left: 4px solid var(--blue);
+    padding: 18px 22px;
+    margin: 28px 0;
+  }
+  .callout p { margin: 0; font-size: 14px; color: #1A4A30; }
+  .callout p strong { color: #0D3022; }
+ 
+  /* ── IMAGE SLOTS ── */
+  .img-slot {
+    border: 1px solid var(--border);
+    background: var(--off);
+    padding: 0;
+    margin: 36px 0;
+    overflow: hidden;
+  }
+  .img-slot-body {
+    padding: 48px 24px;
+    text-align: center;
+    border: 2px dashed var(--border);
+    margin: 12px;
+  }
+  .img-slot-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+    display: block;
+  }
+  .img-slot-desc { font-size: 12px; color: var(--muted); display: block; }
+  .img-slot-caption {
+    padding: 10px 18px;
+    font-size: 12px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    font-style: italic;
+  }
+ 
+  /* ── STEPS ── */
+  .steps { list-style: none; display: flex; flex-direction: column; gap: 0; margin: 24px 0 32px; }
+  .steps li {
+    display: flex;
+    gap: 0;
+    border-left: 1px solid var(--border);
+    margin-left: 14px;
+    padding-bottom: 28px;
+    position: relative;
+  }
+  .steps li:last-child { padding-bottom: 0; border-left-color: transparent; }
+  .step-dot {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    position: absolute;
+    left: -14px;
+    top: 0;
+  }
+  .step-body { padding-left: 26px; padding-top: 3px; }
+  .step-body strong { color: var(--dark); font-size: 15px; display: block; margin-bottom: 4px; }
+  .step-body p { margin: 0; font-size: 14px; color: var(--muted); }
+ 
+  /* ── GRID ── */
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0 28px; }
+  @media(max-width: 560px) { .grid2 { grid-template-columns: 1fr; } }
+  .card {
+    border: 1px solid var(--border);
+    padding: 20px 22px;
+    background: var(--white);
+  }
+  .card-title { font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 6px; }
+  .card p { margin: 0; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .card.blue-bg { background: var(--blue-bg); border-color: #B8DEC8; }
+  .card.blue-bg .card-title { color: var(--blue); }
+  .card.blue-bg p { color: #1A4A30; }
+ 
+════════════════════════════════════════ -->
+<header class="article-header">
+  <div class="article-meta">
+    <span class="meta-category">Microsoft Fabric</span>
+    <span class="meta-divider"></span>
+    <span class="meta-date">Mayo 2026</span>
+    <span class="meta-divider"></span>
+    <span class="meta-read">Alejandro Benítez Berná</span>
+  </div>
+ 
+  <h1>Cómo construí una liga de fútbol<br><em>en tiempo real</em> con Microsoft Fabric</h1>
+ 
+  <p class="article-lead">
+    Un proyecto práctico para entender de verdad qué es el streaming de datos, por qué Microsoft Fabric cambia las reglas del juego y cómo KQL no es tan distinto de lo que ya conoces.
+  </p>
+ 
+
+</header>
+ 
+ 
+<!-- ════════════════════════════════════════
+     INTRO
+════════════════════════════════════════ -->
+<h2>Por qué un proyecto de fútbol</h2>
+
+<p>
+Cuando empecé a explorar <strong>Microsoft Fabric</strong> me encontré con el problema clásico de aprender una tecnología nueva: la documentación oficial explica muy bien las piezas por separado, pero cuesta ver cómo encajan entre sí hasta que no las usas en algo concreto.</p>
+ <br>
+<p>Decidí construir un proyecto real desde cero. Elegí el fútbol como caso de uso porque es fácil de entender para cualquiera: hay partidos, hay goles, hay una clasificación que cambia en función de los resultados. Eso encaja a la perfección con lo que hace el streaming de datos, que es exactamente procesar información que llega de forma continua y en tiempo real.</p>
+ <br>
+<div class="pull-quote">
+  <p>"La mejor forma de aprender una tecnología nueva es construir algo con ella, aunque sea con datos inventados."</p>
+</div>
+ <br>
+<p>El resultado es un sistema donde puedes ver en directo cómo avanza la clasificación de la liga, quién lidera la tabla de goleadores y qué equipos acumulan más tarjetas, todo actualizado automáticamente cada 30 segundos mientras el simulador está generando partidos.</p>
+ <br>
+<!-- *** IMAGEN 1 ***
+     Añade aquí una captura del Real-Time Dashboard en funcionamiento.
+     Debería mostrar el dashboard completo con los tiles de clasificación,
+     goleadores, partidos en vivo y el gráfico de evolución del Top 5.
+     Tamaño recomendado: 1400 x 800 px aprox.
+-->
+<div class="img-slot">
+  <div class="img-slot-body">
+    <span class="img-slot-label">[ IMAGEN 1 ] — Real-Time Dashboard en funcionamiento</span>
+    <span class="img-slot-desc">Captura del dashboard con los tiles de clasificación, goleadores y partidos en vivo</span>
+  </div>
+  <div class="img-slot-caption">Vista del Real-Time Dashboard de Fabric con los datos de la jornada actualizándose en tiempo real.</div>
+</div>
+ <br>
+ 
+<!-- ════════════════════════════════════════
+     QUÉ ES FABRIC
+════════════════════════════════════════ -->
+<h2>Qué es Microsoft Fabric y por qué importa</h2>
+ 
+<p>Si llevas tiempo en el mundo de los datos habrás oído hablar de servicios como Azure Event Hubs, Azure Stream Analytics, Azure Data Explorer o Power BI. Son herramientas potentes, pero usarlas juntas implica configurar conexiones entre ellas, gestionar credenciales independientes, pagar por cada servicio por separado y tener conocimientos de infraestructura cloud que no siempre se tienen cuando estás aprendiendo.</p>
+<br>
+<p><strong>Microsoft Fabric</strong> es la respuesta de Microsoft a ese problema. Es una plataforma unificada que integra todos esos componentes en un solo sitio, con una interfaz web accesible y sin necesidad de tocar Azure directamente. Todo el proyecto vive en el mismo workspace.</p>
+ <br>
+<p>Lo que utilizamos en concreto es la capacidad de <strong>Real-Time Intelligence</strong> de Fabric, el conjunto de herramientas diseñado para trabajar con datos que llegan de forma continua: ingesta en streaming, almacenamiento analítico de baja latencia y visualización en tiempo real.</p>
+ <br>
+<!-- *** IMAGEN 2 ***
+     Añade aquí una captura del Workspace de Fabric mostrando todos los recursos del proyecto.
+     Debería verse el Eventhouse, el Eventstream, el Notebook y el Real-Time Dashboard
+     listados en el workspace "Liga-Futbol-RTI".
+     Tamaño recomendado: 1400 x 700 px aprox.
+-->
+<div class="img-slot">
+  <div class="img-slot-body">
+    <span class="img-slot-label">[ IMAGEN 2 ] — Workspace de Fabric con todos los recursos</span>
+    <span class="img-slot-desc">Captura del workspace mostrando el Eventhouse, Eventstream, Notebook y Dashboard</span>
+  </div>
+
+  <div class="img-slot-caption">El workspace "Liga-Futbol-RTI" con todos los componentes del proyecto agrupados en un mismo lugar.</div>
+</div>
+ 
+<div class="callout">
+  <p><strong>Trial gratuito.</strong> Puedes activar el trial de 60 dias de Microsoft Fabric en app.fabric.microsoft.com con una cuenta de Microsoft. No requiere suscripcion de Azure ni tarjeta de credito. Es suficiente para montar este proyecto completo.</p>
+</div>
+ 
+ <br>
+<!-- ════════════════════════════════════════
+     ARQUITECTURA
+════════════════════════════════════════ -->
+<h2>La arquitectura del proyecto</h2>
+ 
+<p>Antes de construir nada, conviene entender cómo fluyen los datos de principio a fin. El pipeline tiene cinco componentes encadenados:</p><br>
+ 
+<!-- DIAGRAMA SVG GENERADO — arquitectura del pipeline -->
+<div class="diagram-wrap">
+<svg viewBox="0 0 720 160" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:560px;font-family:'DM Sans',sans-serif">
+  <!-- fondo -->
+  <rect width="720" height="160" fill="#F7F8FA"></rect>
+ 
+  <!-- Nodo 1: Python -->
+  <rect x="20" y="44" width="110" height="72" rx="4" fill="white" stroke="#E4E8EE" stroke-width="1.5"></rect>
+  <rect x="20" y="44" width="110" height="4" rx="2" fill="#107C41"></rect>
+  <text x="75" y="82" text-anchor="middle" font-size="12" font-weight="600" fill="#1A2030">Python</text>
+  <text x="75" y="98" text-anchor="middle" font-size="10" fill="#6B7A94">Notebook Fabric</text>
+  <text x="75" y="112" text-anchor="middle" font-size="10" fill="#6B7A94">Simulador</text>
+ 
+  <!-- flecha 1→2 -->
+  <line x1="132" y1="80" x2="156" y2="80" stroke="#107C41" stroke-width="1.5"></line>
+  <polygon points="156,75 166,80 156,85" fill="#107C41"></polygon>
+ 
+  <!-- Nodo 2: Event Hub -->
+  <rect x="168" y="44" width="120" height="72" rx="4" fill="white" stroke="#B8DEC8" stroke-width="1.5"></rect>
+  <rect x="168" y="44" width="120" height="4" rx="2" fill="#107C41"></rect>
+  <text x="228" y="82" text-anchor="middle" font-size="12" font-weight="600" fill="#1A2030">Event Hub</text>
+  <text x="228" y="98" text-anchor="middle" font-size="10" fill="#6B7A94">Custom endpoint</text>
+  <text x="228" y="112" text-anchor="middle" font-size="10" fill="#6B7A94">Connection string</text>
+ 
+  <!-- flecha 2→3 -->
+  <line x1="290" y1="80" x2="314" y2="80" stroke="#107C41" stroke-width="1.5"></line>
+  <polygon points="314,75 324,80 314,85" fill="#107C41"></polygon>
+ 
+  <!-- Nodo 3: Eventstream -->
+  <rect x="326" y="44" width="120" height="72" rx="4" fill="white" stroke="#B8DEC8" stroke-width="1.5"></rect>
+  <rect x="326" y="44" width="120" height="4" rx="2" fill="#107C41"></rect>
+  <text x="386" y="82" text-anchor="middle" font-size="12" font-weight="600" fill="#1A2030">Eventstream</text>
+  <text x="386" y="98" text-anchor="middle" font-size="10" fill="#6B7A94">Transportista</text>
+  <text x="386" y="112" text-anchor="middle" font-size="10" fill="#6B7A94">Direct Ingestion</text>
+ 
+  <!-- flecha 3→4 -->
+  <line x1="448" y1="80" x2="472" y2="80" stroke="#107C41" stroke-width="1.5"></line>
+  <polygon points="472,75 482,80 472,85" fill="#107C41"></polygon>
+ 
+  <!-- Nodo 4: Eventhouse -->
+  <rect x="484" y="44" width="120" height="72" rx="4" fill="white" stroke="#B8DEC8" stroke-width="1.5"></rect>
+  <rect x="484" y="44" width="120" height="4" rx="2" fill="#107C41"></rect>
+  <text x="544" y="82" text-anchor="middle" font-size="12" font-weight="600" fill="#1A2030">Eventhouse</text>
+  <text x="544" y="98" text-anchor="middle" font-size="10" fill="#6B7A94">KQL Database</text>
+  <text x="544" y="112" text-anchor="middle" font-size="10" fill="#6B7A94">Vistas materializadas</text>
+ 
+  <!-- flecha 4→5 -->
+  <line x1="606" y1="80" x2="630" y2="80" stroke="#107C41" stroke-width="1.5"></line>
+  <polygon points="630,75 640,80 630,85" fill="#107C41"></polygon>
+ 
+  <!-- Nodo 5: Dashboard -->
+  <rect x="642" y="44" width="60" height="72" rx="4" fill="#107C41" stroke="#107C41" stroke-width="1.5"></rect>
+  <text x="672" y="78" text-anchor="middle" font-size="11" font-weight="600" fill="white">RTI</text>
+  <text x="672" y="94" text-anchor="middle" font-size="10" fill="#B8DEC8">Dashboard</text>
+  <text x="672" y="108" text-anchor="middle" font-size="10" fill="#B8DEC8">30 seg</text>
+ 
+  <!-- etiqueta latencia -->
+  <text x="360" y="140" text-anchor="middle" font-size="10" fill="#9BA8BC">Latencia extremo a extremo: &lt; 1 segundo</text>
+</svg>
+</div>
+ <br>
+<p>El script de Python <strong>genera los eventos</strong> de cada partido y los envía al Event Hub. El Eventstream los <strong>recoge y transporta</strong> al Eventhouse con Direct Ingestion. El Eventhouse los <strong>almacena</strong> en una KQL Database con vistas materializadas que mantienen la clasificación siempre calculada. El Dashboard <strong>consulta</strong> esas vistas cada 30 segundos y actualiza los tiles.</p>
+ <br>
+<div class="grid2">
+  <div class="card">
+    <div class="card-title">Eventstream</div>
+    <p>El mensajero del pipeline. Recibe los eventos y los enruta al destino sin almacenar nada. Gestiona la conexion entre la fuente Python y la base de datos KQL.</p>
+  </div>
+  <div class="card blue-bg">
+    <div class="card-title">Eventhouse</div>
+    <p>El almacen analitico. Guarda todos los eventos con indexacion optimizada para consultas en tiempo real. Aqui viven los goles, tarjetas y la clasificacion.</p>
+  </div>
+</div>
+ 
+ <br>
+<!-- ════════════════════════════════════════
+     PASO 1
+════════════════════════════════════════ -->
+<div class="section-divider">Paso 1</div>
+<h2>Montar la infraestructura en Fabric</h2>
+
+<p>Todo se hace desde la interfaz web de Fabric. No hay que tocar Azure ni escribir codigo de infraestructura. Son cuatro pasos consecutivos:</p>
+<br>
+ 
+<ul class="steps">
+  <li>
+    <div class="step-dot">1</div>
+    <div class="step-body">
+      <strong>Crear el Workspace</strong>
+      <p>El contenedor de todos los recursos del proyecto. Equivale a una carpeta de trabajo en la nube. Usamos la licencia Trial gratuita de 60 dias.</p>
+    </div>
+  </li>
+  <li>
+    <div class="step-dot">2</div>
+    <div class="step-body">
+      <strong>Crear el Eventhouse</strong>
+      <p>La base de datos KQL. Al crearlo, Fabric genera automaticamente la base de datos interior. Activamos el Streaming Ingestion para que acepte datos en tiempo real.</p>
+    </div>
+  </li>
+  <li>
+    <div class="step-dot">3</div>
+    <div class="step-body">
+      <strong>Crear el Eventstream con fuente Custom endpoint</strong>
+      <p>El transportista de datos. Al crear la fuente, Fabric nos proporciona una Connection String que usaremos en el script Python para enviar eventos.</p>
+    </div>
+  </li>
+  <li>
+    <div class="step-dot">4</div>
+    <div class="step-body">
+      <strong>Conectar Eventstream con el Eventhouse</strong>
+      <p>Configuramos el destino con Direct Ingestion, formato JSON y tabla EventosPartido. Esto garantiza que los eventos llegan a la base de datos en menos de un segundo.</p>
+<br>
+    </div>
+  </li>
+</ul>
+ 
+<!-- *** IMAGEN 3 ***
+     Añade aquí una captura del Eventstream con el pipeline funcionando.
+     Debería mostrar los tres nodos (python-simulator, es_liga-futbol-stream, Eventhouse)
+     todos marcados como "Active" con el indicador verde.
+     Tamaño recomendado: 1400 x 600 px aprox.
+-->
+<div class="img-slot">
+  <div class="img-slot-body">
+    <span class="img-slot-label">[ IMAGEN 3 ] — Eventstream con el pipeline activo</span>
+    <span class="img-slot-desc">Captura mostrando los tres nodos activos: python-simulator, Eventstream y Eventhouse, todos en estado Active</span>
+  </div>
+  <div class="img-slot-caption">El Eventstream con los tres nodos del pipeline activos. Los datos fluyen de izquierda a derecha en tiempo real.</div>
+</div>
+ <br>
+ 
+<!-- ════════════════════════════════════════
+     PASO 2
+════════════════════════════════════════ -->
+<div class="section-divider">Paso 2</div>
+<h2>El simulador de partidos en Python</h2>
+ 
+<p>El simulador es un Notebook de Python que vive dentro del propio Fabric. No hace falta instalar nada en el ordenador — todo corre en la nube sobre Apache Spark, que es el motor de procesamiento que usa Fabric internamente para ejecutar codigo.</p>
+ <br>
+<p>El simulador genera 20 equipos con nombres reales de la liga espanola, 300 jugadores sinteticos distribuidos por posicion y dorsal, y simula una jornada completa de 10 partidos. Por cada accion que ocurre genera un mensaje JSON y lo envia al Event Hub.</p>
+ <br>
+<p>Una decision interesante del diseno es la <strong>fuerza por equipo</strong>: cada club tiene un valor entre 0 y 1 que afecta a la probabilidad de que marque en cada accion. Esto permite controlar los resultados de la simulacion, por ejemplo dando al Atletico de Madrid muchas mas opciones de ganar que al resto.</p>
+ <br>
+<p>Hay cinco tipos de evento que el simulador puede generar:</p>
+ <br>
+<!-- DIAGRAMA SVG — tipos de evento -->
+<div class="diagram-wrap">
+<svg viewBox="0 0 720 90" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:500px;font-family:'DM Sans',sans-serif">
+  <rect width="720" height="90" fill="#F7F8FA"></rect>
+ 
+  <!-- inicio -->
+  <rect x="20" y="20" width="116" height="50" rx="3" fill="white" stroke="#E4E8EE" stroke-width="1.5"></rect>
+  <rect x="20" y="20" width="116" height="3" rx="1.5" fill="#6B7A94"></rect>
+  <text x="78" y="47" text-anchor="middle" font-size="12" font-weight="600" fill="#1A2030">inicio</text>
+  <text x="78" y="62" text-anchor="middle" font-size="10" fill="#6B7A94">Arranca el partido</text>
+ 
+  <!-- gol -->
+  <rect x="152" y="20" width="116" height="50" rx="3" fill="white" stroke="#B8DEC8" stroke-width="1.5"></rect>
+  <rect x="152" y="20" width="116" height="3" rx="1.5" fill="#107C41"></rect>
+  <text x="210" y="47" text-anchor="middle" font-size="12" font-weight="600" fill="#107C41">gol</text>
+  <text x="210" y="62" text-anchor="middle" font-size="10" fill="#6B7A94">Goleador + penalti</text>
+ 
+  <!-- asistencia -->
+  <rect x="284" y="20" width="116" height="50" rx="3" fill="white" stroke="#B8DEC8" stroke-width="1.5"></rect>
+  <rect x="284" y="20" width="116" height="3" rx="1.5" fill="#107C41"></rect>
+  <text x="342" y="47" text-anchor="middle" font-size="12" font-weight="600" fill="#107C41">asistencia</text>
+  <text x="342" y="62" text-anchor="middle" font-size="10" fill="#6B7A94">70% de los goles</text>
+ 
+  <!-- tarjeta -->
+  <rect x="416" y="20" width="116" height="50" rx="3" fill="white" stroke="#E4E8EE" stroke-width="1.5"></rect>
+  <rect x="416" y="20" width="116" height="3" rx="1.5" fill="#6B7A94"></rect>
+  <text x="474" y="47" text-anchor="middle" font-size="12" font-weight="600" fill="#1A2030">tarjeta</text>
+  <text x="474" y="62" text-anchor="middle" font-size="10" fill="#6B7A94">Amarilla / Roja</text>
+ 
+  <!-- final -->
+  <rect x="548" y="20" width="116" height="50" rx="3" fill="white" stroke="#E4E8EE" stroke-width="1.5"></rect>
+  <rect x="548" y="20" width="116" height="3" rx="1.5" fill="#6B7A94"></rect>
+  <text x="606" y="47" text-anchor="middle" font-size="12" font-weight="600" fill="#1A2030">final</text>
+  <text x="606" y="62" text-anchor="middle" font-size="10" fill="#6B7A94">Cierra el partido</text>
+</svg>
+</div>
+ <br>
+<p>Cada evento viaja como un objeto JSON con toda la informacion relevante: el nombre del jugador, el equipo, el minuto, el marcador en ese momento. El nombre del jugador viaja <em>dentro</em> del evento, por lo que cuando llega al Eventhouse ya esta disponible para mostrarlo en el dashboard sin necesidad de cruzar tablas adicionales.</p>
+ <br>
+<div class="code-wrap">
+  <div class="code-header">
+    <div class="code-dot" style="background:#E4E8EE"></div>
+    <div class="code-dot" style="background:#E4E8EE"></div>
+    <div class="code-dot" style="background:#E4E8EE"></div>
+    <span class="code-title">evento_gol.json — estructura del mensaje enviado al Event Hub</span>
+  </div>
+  <div class="code-body">
+{<br>
+&nbsp;&nbsp;<span class="str">"tipo_evento"</span>:     <span class="str">"gol"</span>,<br>
+&nbsp;&nbsp;<span class="str">"jornada"</span>:         <span class="num">1</span>,<br>
+&nbsp;&nbsp;<span class="str">"partido_id"</span>:      <span class="str">"J1_3v8"</span>,<br>
+&nbsp;&nbsp;<span class="str">"minuto"</span>:          <span class="num">67</span>,<br>
+&nbsp;&nbsp;<span class="str">"jugador_nombre"</span>:  <span class="str">"Carlos Garcia"</span>,<br>
+&nbsp;&nbsp;<span class="str">"equipo_jugador"</span>:  <span class="str">"Atletico Madrid"</span>,<br>
+&nbsp;&nbsp;<span class="str">"equipo_local"</span>:    <span class="str">"Atletico Madrid"</span>,<br>
+&nbsp;&nbsp;<span class="str">"equipo_visitante"</span>:<span class="str">"Real Sociedad"</span>,<br>
+&nbsp;&nbsp;<span class="str">"goles_local"</span>:     <span class="num">2</span>,<br>
+&nbsp;&nbsp;<span class="str">"goles_visitante"</span>: <span class="num">0</span>,<br>
+&nbsp;&nbsp;<span class="str">"es_penalti"</span>:      <span class="kw">false</span><br>
+}
+  </div>
+</div>
+ 
+<!-- *** IMAGEN 4 ***
+     Añade aquí una captura del Notebook de Fabric ejecutándose.
+     Debería mostrar el output de la Celda 4 con los logs de eventos enviándose:
+     las líneas con [GOL], [ASISTENCIA], [TARJETA] y los marcadores de cada partido.
+     Tamaño recomendado: 1400 x 700 px aprox.
+-->
+<div class="img-slot">
+  <div class="img-slot-body">
+    <span class="img-slot-label">[ IMAGEN 4 ] — Notebook ejecutándose con los eventos en tiempo real</span>
+    <span class="img-slot-desc">Captura del output del Notebook mostrando los logs de eventos: GOL, ASISTENCIA, TARJETA y FINAL</span>
+  </div>
+  <div class="img-slot-caption">El Notebook generando y enviando eventos. Cada linea representa un mensaje JSON enviado al Event Hub.</div>
+</div>
+ <br>
+ 
+<!-- ════════════════════════════════════════
+     PASO 3
+════════════════════════════════════════ -->
+<div class="&lt;br">"section-divider"&gt;Paso 3</div>
+<h2>KQL: consultas para datos en movimiento</h2>
+ 
+<p>Una vez que los datos estan en el Eventhouse los consultamos con <strong>KQL, Kusto Query Language</strong>. Si tienes experiencia con SQL la logica es muy parecida, pero la sintaxis cambia: en KQL las consultas se construyen como una cadena de transformaciones encadenadas con el operador <span class="badge">|</span>, lo que las hace muy legibles una vez que te acostumbras.</p>
+ <br>
+<h3>Por que KQL y no SQL</h3>
+ 
+<table class="compare">
+  <thead>
+    <tr>
+      <th>Aspecto</th>
+      <th>SQL</th>
+      <th>KQL</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Disenado para</td>
+      <td>Datos relacionales estaticos</td>
+      <td class="hl">Series temporales y streaming</td>
+    </tr>
+    <tr>
+      <td>Sintaxis</td>
+      <td>SELECT ... FROM ... WHERE</td>
+      <td class="hl">Pipeline con operador |</td>
+    </tr>
+    <tr>
+      <td>Rendimiento en streaming</td>
+      <td>No optimizado de serie</td>
+      <td class="hl">Nativo, indexado por tiempo</td>
+    </tr>
+    <tr>
+      <td>Vistas materializadas</td>
+      <td>Soporte limitado</td>
+      <td class="hl">Primera clase, automaticas</td>
+    </tr>
+    <tr>
+      <td>Mejor para</td>
+      <td>ERP, CRM, transaccional</td>
+      <td class="hl">Logs, IoT, telemetria, eventos</td>
+    </tr>
+  </tbody>
+</table>
+ <br>
+<h3>Las vistas materializadas</h3>
+ 
+<p>Este es el concepto mas importante del proyecto desde el punto de vista del rendimiento. Imagina que tras varias jornadas acumulas 100.000 eventos en la tabla principal. Si cada vez que el dashboard se refresca tuvieramos que recorrer todos esos registros para calcular quien es el maximo goleador, las consultas serian lentas e ineficientes.</p>
+ <br>
+<p>Las <strong>vistas materializadas</strong> resuelven esto: son tablas de resumen que Fabric mantiene actualizadas de forma automatica con cada evento nuevo. Cuando llega un gol, la vista <span class="badge">GoleadoresAcum</span> se actualiza al instante. El dashboard consulta esa tabla resumida, no los 100.000 eventos originales.</p>
+ <br>
+<!-- DIAGRAMA SVG — vistas materializadas -->
+<div class="diagram-wrap">
+<svg viewBox="0 0 720 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;min-width:500px;font-family:'DM Sans',sans-serif">
+  <rect width="720" height="130" fill="#F7F8FA"></rect>
+ 
+  <!-- tabla principal -->
+  <rect x="20" y="20" width="180" height="90" rx="4" fill="white" stroke="#E4E8EE" stroke-width="1.5"></rect>
+  <rect x="20" y="20" width="180" height="28" rx="4" fill="#1A2030"></rect>
+  <text x="110" y="39" text-anchor="middle" font-size="11" font-weight="600" fill="white">EventosPartido</text>
+  <text x="110" y="56" text-anchor="middle" font-size="10" fill="#6B7A94">100.000 eventos acumulados</text>
+  <text x="110" y="72" text-anchor="middle" font-size="10" fill="#6B7A94">timestamp, tipo_evento,</text>
+  <text x="110" y="86" text-anchor="middle" font-size="10" fill="#6B7A94">jugador, equipo, goles...</text>
+  <text x="110" y="100" text-anchor="middle" font-size="9" fill="#9BA8BC" font-style="italic">Tabla raw — nunca se consulta directa</text>
+ 
+  <!-- flechas a vistas -->
+  <line x1="202" y1="48" x2="255" y2="36" stroke="#107C41" stroke-width="1.2" stroke-dasharray="4,3"></line>
+  <line x1="202" y1="65" x2="255" y2="65" stroke="#107C41" stroke-width="1.2" stroke-dasharray="4,3"></line>
+  <line x1="202" y1="82" x2="255" y2="94" stroke="#107C41" stroke-width="1.2" stroke-dasharray="4,3"></line>
+ 
+  <!-- vista 1 -->
+  <rect x="258" y="18" width="160" height="36" rx="3" fill="white" stroke="#B8DEC8" stroke-width="1.5"></rect>
+  <rect x="258" y="18" width="160" height="3" rx="1.5" fill="#107C41"></rect>
+  <text x="338" y="33" text-anchor="middle" font-size="11" font-weight="600" fill="#107C41">GoleadoresAcum</text>
+  <text x="338" y="47" text-anchor="middle" font-size="10" fill="#6B7A94">goles + penaltis por jugador</text>
+ 
+  <!-- vista 2 -->
+  <rect x="258" y="47" width="160" height="36" rx="3" fill="white" stroke="#B8DEC8" stroke-width="1.5"></rect>
+  <rect x="258" y="47" width="160" height="3" rx="1.5" fill="#107C41"></rect>
+  <text x="338" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#107C41">AsistenciasAcum</text>
+  <text x="338" y="76" text-anchor="middle" font-size="10" fill="#6B7A94">asistencias por jugador</text>
+ 
+  <!-- vista 3 -->
+  <rect x="258" y="76" width="160" height="36" rx="3" fill="white" stroke="#B8DEC8" stroke-width="1.5"></rect>
+  <rect x="258" y="76" width="160" height="3" rx="1.5" fill="#107C41"></rect>
+  <text x="338" y="91" text-anchor="middle" font-size="11" font-weight="600" fill="#107C41">TarjetasAcum</text>
+  <text x="338" y="105" text-anchor="middle" font-size="10" fill="#6B7A94">amarillas + rojas por jugador</text>
+ 
+  <!-- flechas a dashboard -->
+  <line x1="420" y1="36" x2="468" y2="56" stroke="#107C41" stroke-width="1.2"></line>
+  <line x1="420" y1="65" x2="468" y2="65" stroke="#107C41" stroke-width="1.2"></line>
+  <line x1="420" y1="94" x2="468" y2="74" stroke="#107C41" stroke-width="1.2"></line>
+  <polygon points="465,51 475,56 465,61" fill="#107C41"></polygon>
+  <polygon points="465,60 475,65 465,70" fill="#107C41"></polygon>
+  <polygon points="465,69 475,74 465,79" fill="#107C41"></polygon>
+ 
+  <!-- dashboard -->
+  <rect x="478" y="35" width="130" height="60" rx="4" fill="#107C41"></rect>
+  <text x="543" y="60" text-anchor="middle" font-size="11" font-weight="600" fill="white">RTI Dashboard</text>
+  <text x="543" y="76" text-anchor="middle" font-size="10" fill="#B8DEC8">Respuesta &lt; 100ms</text>
+  <text x="543" y="88" text-anchor="middle" font-size="9" fill="#7AC49A">consulta solo las vistas</text>
+ 
+  <!-- etiqueta actualizacion automatica -->
+  <text x="338" y="122" text-anchor="middle" font-size="10" fill="#9BA8BC" font-style="italic">Las vistas se actualizan automaticamente con cada nuevo evento</text>
+</svg>
+</div>
+ <br>
+<p>Creamos tres vistas materializadas: <span class="badge">GoleadoresAcum</span>, <span class="badge">AsistenciasAcum</span> y <span class="badge">TarjetasAcum</span>. Todas se crean con el parametro <span class="badge">backfill=true</span>, que indica a Fabric que al crear la vista procese tambien todos los datos historicos que ya existian en la tabla, no solo los nuevos.
+</p>
+
+<!-- *** IMAGEN 5 ***
+     Añade aquí una captura del KQL Queryset mostrando las vistas materializadas.
+     Debería verse el panel izquierdo con las "Materialized views" desplegadas
+     y las tres vistas listadas (GoleadoresAcum, AsistenciasAcum, TarjetasAcum).
+     Tamaño recomendado: 1400 x 700 px aprox.
+-->
+<div class="img-slot">
+  <div class="img-slot-body">
+    <span class="img-slot-label">[ IMAGEN 5 ] — KQL Queryset con las vistas materializadas</span>
+    <span class="img-slot-desc">Captura del KQL Queryset con el panel izquierdo mostrando las tres vistas materializadas creadas</span>
+  </div>
+  <div class="img-slot-caption">El KQL Queryset con las vistas materializadas en el panel de navegacion izquierdo.</div>
+</div>
+ <br>
+ 
+<!-- ════════════════════════════════════════
+     PASO 4 <br>
+════════════════════════════════════════ -->
+<div class="section-divider">Paso 4</div>
+<h2>El Real-Time Dashboard</h2>
+ 
+<p>El ultimo paso es el <strong>Real-Time Dashboard</strong> de Fabric. A diferencia de Power BI, orientado al analisis historico, este tipo de dashboard esta disenado para actualizar sus tiles de forma continua consultando directamente la KQL Database.</p>
+ <br>
+<p>Configuramos el auto-refresco a 30 segundos y creamos 12 tiles con distintos tipos de visualizacion. La combinacion de tablas con rankings, graficos de lineas para ver la evolucion de los equipos a lo largo de las jornadas, graficos de barras para comparar estadisticas por club y tiles de numero grande para los totales de la jornada da una vista completa del estado de la competicion.</p>
+ <br>
+<div class="grid2">
+  <div class="card">
+    <div class="card-title">Tiles de tabla</div>
+    <p>Clasificacion, goleadores, asistencias, partidos en vivo, ultimos goles y tarjetas. Se actualizan con los datos mas recientes del Eventhouse.</p>Microsoft Fabric &amp; Real-Time Intelligence
+  </div>
+  <div class="card">
+    <div class="card-title">Tiles de grafico</div>
+    <p>Evolucion Top 5 en grafico de lineas, goles por equipo y por tramo de minuto en barras, distribucion de tipos de evento en grafico de sectores.</p>
+  </div>
+</div>
+ 
+<div class="callout">
+  <p>Con el dashboard abierto en una pestana y el Notebook ejecutandose en otra, los tiles cambian visiblemente cada 30 segundos. La clasificacion se reordena segun los resultados y los goleadores escalan posiciones en tiempo real. Es el momento mas visual del proyecto.</p>
+</div>
+ 
+<!-- *** IMAGEN 6 ***
+     Añade aquí una captura del Real-Time Dashboard en modo Vista (no edición)
+     mostrando datos reales de la simulación. Debería verse la clasificación con
+     equipos y puntos, los goleadores con nombres y el gráfico de evolución.
+     Tamaño recomendado: 1600 x 900 px aprox. (la más importante del artículo)
+-->
+<div class="img-slot">
+  <div class="img-slot-body">
+    <span class="img-slot-label">[ IMAGEN 6 ] — Dashboard con datos reales de la simulación (imagen principal)</span>
+    <span class="img-slot-desc">Captura en modo Vista del dashboard completo con clasificacion, goleadores, grafico de evolucion y tiles de stats. Esta es la imagen mas importante del articulo.</span>
+  </div>
+  <div class="img-slot-caption">El Real-Time Dashboard con datos reales de la simulacion. Todos los tiles se actualizan automaticamente cada 30 segundos.</div>
+
+</div>
+ <br>
+ 
+<!-- ════════════════════════════════════════
+     POR QUÉ FABRIC
+════════════════════════════════════════ -->
+<h2>Por que merece la pena aprender Microsoft Fabric</h2>
+ 
+<p>Esta es la pregunta mas habitual cuando cuento este proyecto. Mi respuesta: porque permite construir cosas que antes requeian mucho mas conocimiento de infraestructura y varios servicios coordinados.</p>
+ <br>
+<ul class="steps">
+  <li>
+    <div class="step-dot">1</div>
+    <div class="step-body">
+      <strong>Todo en un workspace</strong>
+      <p>Sin saltar entre servicios de Azure ni configurar conexiones entre componentes. El Notebook, el Eventstream, el Eventhouse y el Dashboard conviven en el mismo lugar. El tiempo se invierte en los datos, no en la infraestructura.</p>
+    </div>
+  </li>
+  <li>
+    <div class="step-dot">2</div>
+    <div class="step-body">
+      <strong>Latencia inferior a un segundo</strong>
+      <p>Con Direct Ingestion los eventos pasan de Python al Eventhouse casi de forma inmediata. En una arquitectura Azure tradicional esto exigiria coordinar varios servicios con sus propias configuraciones y costes.</p>
+    </div>
+  </li>
+  <li>
+    <div class="step-dot">3</div>
+    <div class="step-body">
+      <strong>Trial gratuito de 60 dias</strong>
+      <p>Suficiente para aprender, construir un proyecto completo y tenerlo como referencia en el portfolio. No requiere suscripcion de Azure ni tarjeta de credito.</p>
+    </div>
+  </li>
+  <li>
+    <div class="step-dot">4</div>
+    <div class="step-body">
+      <strong>Arquitectura escalable sin cambios</strong>
+      <p>Si mañana se quisiera conectar una API de datos de futbol real en lugar del simulador, solo cambiaria el Notebook. El Eventstream, el Eventhouse y el Dashboard seguirian funcionando igual sin modificaciones.</p>
+<br>
+    </div>
+  </li>
+</ul>
+ 
+ 
+<!-- ════════════════════════════════════════
+     TECNOLOGÍAS
+════════════════════════════════════════ -->
+<h2>Tecnologias utilizadas</h2>
+ 
+<p>El proyecto se construyo enteramente dentro de <strong>Microsoft Fabric</strong>, usando los siguientes componentes: Notebook de Python con PySpark como simulador, Eventstream para la ingesta en streaming, Eventhouse con KQL Database para el almacenamiento analitico, y Real-Time Dashboard para la visualizacion. Las consultas y vistas materializadas se escribieron en KQL.</p>
+ <br>
+<div class="tags">
+  <span class="tag">Microsoft Fabric</span>
+  <span class="tag">Real-Time Intelligence</span>
+  <span class="tag">KQL</span>
+  <span class="tag">Python</span>
+  <span class="tag">PySpark</span>
+  <span class="tag">Streaming</span>
+  <span class="tag">Data Engineering</span>
+  <span class="tag">Azure</span>
+</div>
+ <br>
+ 
+<!-- ════════════════════════════════════════
+     CONCLUSIÓN
+════════════════════════════════════════ -->
+<h2>Para terminar</h2>
+
+<p>Este proyecto demostro que con Microsoft Fabric es posible construir un pipeline completo de datos en tiempo real, desde la generacion de eventos hasta la visualizacion, sin necesidad de gestionar infraestructura externa ni combinar multiples servicios de Azure por cuenta propia.</p>
+ <br>
+<p>Lo mas valioso del proceso no fue solo el resultado final, sino todo lo que queda claro por el camino: como funciona el streaming de datos, por que KQL es la herramienta correcta para este tipo de casos, que son las vistas materializadas y como Fabric integra todas las piezas en una sola plataforma coherente.</p>
+ <br>
+<p>Si estas empezando en el mundo de los datos y quieres aprender herramientas con alta demanda en el mercado, Fabric es una apuesta solida. El trial gratuito da tiempo mas que suficiente para construir algo como esto de principio a fin y entender de verdad como funciona el dato en tiempo real.</p>
+ <br>
+<hr>
+ 
+<!-- FIRMA -->
+<div class="firma">
+  <div class="firma-avatar">AB</div>
+  <div>
+    <div class="firma-name">Alejandro Benitez Berna</div>
+    <div class="firma-role">Realizado por Alejandro Benitez Berna &nbsp;·&nbsp; IA &amp; Big Data</div>
+  </div>
+</div>
