@@ -346,15 +346,21 @@
     margin-top: 52px;
   }
   .firma-avatar {
-    width: 52px; height: 52px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
-    background: var(--dark);
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--serif);
-    font-size: 18px;
-    color: #fff;
+    overflow: hidden;
     flex-shrink: 0;
-    letter-spacing: .02em;
+    border: 2px solid var(--border);
+    display: block;
+  }
+  .firma-avatar img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+    max-width: 52px;
   }
   .firma-name {
     font-family: var(--serif);
@@ -394,9 +400,9 @@
   <div class="article-meta">
     <span class="meta-category">Microsoft Fabric</span>
     <span class="meta-divider"></span>
-    <span class="meta-date">Nivel Medio</span>
+    <span class="meta-date">Mayo 2026</span>
     <span class="meta-divider"></span>
-    <span class="meta-read">Realizado por Alejandro Benítez Berná</span>
+    <span class="meta-read">12 min de lectura</span>
   </div>
 
   <h1>Cómo construí una liga de fútbol<br><em>en tiempo real</em> con Microsoft Fabric</h1>
@@ -404,6 +410,14 @@
   <p class="article-lead">
     Un proyecto práctico para entender de verdad qué es el streaming de datos, por qué Microsoft Fabric cambia las reglas del juego y cómo KQL no es tan distinto de lo que ya conoces.
   </p>
+
+  <div class="article-chips">
+    <span class="chip blue">Real-Time Intelligence</span>
+    <span class="chip blue">KQL</span>
+    <span class="chip">Python</span>
+    <span class="chip">PySpark</span>
+    <span class="chip">Para principiantes</span>
+  </div>
 </header>
 
 
@@ -537,7 +551,7 @@
 <div class="section-divider">Paso 1</div>
 <h2>Montar la infraestructura en Fabric</h2>
 
-<p>Todo se hace desde la interfaz web de Fabric. No hay que tocar Azure ni escribir codigo de infraestructura. Son cuatro pasos consecutiNivel mediovos:</p>
+<p>Todo se hace desde la interfaz web de Fabric. No hay que tocar Azure ni escribir codigo de infraestructura. Son cuatro pasos consecutivos:</p>
 
 <ul class="steps">
   <li>
