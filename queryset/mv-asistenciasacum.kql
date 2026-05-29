@@ -1,0 +1,8 @@
+.create-or-alter materialized-view with (backfill=true) AsistenciasAcum on table EventosPartido
+{
+    EventosPartido
+    | where tipo_evento == "asistencia"
+    | summarize
+        asistencias = count()
+        by jugador_id, jugador_nombre, equipo_jugador, posicion, dorsal
+}
