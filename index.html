@@ -449,7 +449,7 @@
 </figure>
 
 <div class="callout">
-  <p><strong>Trial gratuito.</strong> Puedes activar el trial de 60 dias de Microsoft Fabric en app.fabric.microsoft.com con una cuenta de Microsoft. No requiere suscripcion de Azure ni tarjeta de credito. Es suficiente para montar este proyecto completo.</p>
+  <p><strong>Trial gratuito.</strong> Puedes activar el trial de 60 dias de Microsoft Fabric en app.fabric.microsoft.com con una cuenta de Microsoft. No requiere suscripción de Azure ni tarjeta de credito. Es suficiente para montar este proyecto completo.</p>
 </div>
 
 
@@ -526,11 +526,11 @@
 <div class="grid2">
   <div class="card">
     <div class="card-title">Eventstream</div>
-    <p>El mensajero del pipeline. Recibe los eventos y los enruta al destino sin almacenar nada. Gestiona la conexion entre la fuente Python y la base de datos KQL.</p>
+    <p>El mensajero del pipeline. Recibe los eventos y los enruta al destino sin almacenar nada. Gestiona la conexión entre la fuente Python y la base de datos KQL.</p>
   </div>
   <div class="card blue-bg">
     <div class="card-title">Eventhouse</div>
-    <p>El almacen analitico. Guarda todos los eventos con indexacion optimizada para consultas en tiempo real. Aqui viven los goles, tarjetas y la clasificacion.</p>
+    <p>El almacén analítico. Guarda todos los eventos con indexación optimizada para consultas en tiempo real. Aqui viven los goles, tarjetas y la clasificación.</p>
   </div>
 </div>
 
@@ -590,7 +590,7 @@
 
 <p>El simulador genera 20 equipos con nombres reales de la liga espanola, 300 jugadores sinteticos distribuidos por posicion y dorsal, y simula una jornada completa de 10 partidos. Por cada accion que ocurre genera un mensaje JSON y lo envia al Event Hub.</p>
 
-<p>Una decision interesante del diseno es la <strong>fuerza por equipo</strong>: cada club tiene un valor entre 0 y 1 que afecta a la probabilidad de que marque en cada accion. Esto permite controlar los resultados de la simulacion, por ejemplo dando al Atletico de Madrid muchas mas opciones de ganar que al resto.</p>
+<p>Una decisión interesante del diseno es la <strong>fuerza por equipo</strong>: cada club tiene un valor entre 0 y 1 que afecta a la probabilidad de que marque en cada accion. Esto permite controlar los resultados de la simulación, por ejemplo dando al Atlético de Madrid muchas mas opciones de ganar que al resto.</p>
 
 <p>Hay cinco tipos de evento que el simulador puede generar:</p>
 
@@ -768,7 +768,7 @@
   <text x="543" y="88" text-anchor="middle" font-size="9" fill="#7AC49A">consulta solo las vistas</text>
 
   <!-- etiqueta actualizacion automatica -->
-  <text x="338" y="122" text-anchor="middle" font-size="10" fill="#9BA8BC" font-style="italic">Las vistas se actualizan automaticamente con cada nuevo evento</text>
+  <text x="338" y="122" text-anchor="middle" font-size="10" fill="#9BA8BC" font-style="italic">Las vistas se actualizan automáticamente con cada nuevo evento</text>
 </svg>
 </div>
 
@@ -855,7 +855,7 @@
 ════════════════════════════════════════ -->
 <h2>Tecnologias utilizadas</h2>
 
-<p>El proyecto se construyo enteramente dentro de <strong>Microsoft Fabric</strong>, usando los siguientes componentes: Notebook de Python con PySpark como simulador, Eventstream para la ingesta en streaming, Eventhouse con KQL Database para el almacenamiento analitico, y Real-Time Dashboard para la visualización. Las consultas y vistas materializadas se escribieron en KQL.</p>
+<p>El proyecto se construyó enteramente dentro de <strong>Microsoft Fabric</strong>, usando los siguientes componentes: Notebook de Python con PySpark como simulador, Eventstream para la ingesta en streaming, Eventhouse con KQL Database para el almacenamiento analítico, y Real-Time Dashboard para la visualización. Las consultas y vistas materializadas se escribieron en KQL.</p>
 
 <div class="tags">
   <span class="tag">Microsoft Fabric</span>
@@ -876,9 +876,9 @@
 
 <p>Este proyecto demostró que con Microsoft Fabric es posible construir un pipeline completo de datos en tiempo real, desde la generación de eventos hasta la visualización, sin necesidad de gestionar infraestructura externa ni combinar multiples servicios de Azure por cuenta propia.</p>
 
-<p>Lo mas valioso del proceso no fué solo el resultado final, sino todo lo que queda claro por el camino: como funciona el streaming de datos, por qué KQL es la herramienta correcta para este tipo de casos, que son las vistas materializadas y como Fabric integra todas las piezas en una sola plataforma coherente.</p>
+<p>Lo más valioso del proceso no fué solo el resultado final, sino todo lo que queda claro por el camino: como funciona el streaming de datos, por qué KQL es la herramienta correcta para este tipo de casos, que son las vistas materializadas y como Fabric integra todas las piezas en una sola plataforma coherente.</p>
 
-<p>Si estas empezando en el mundo de los datos y quieres aprender herramientas con alta demanda en el mercado, Fabric es una apuesta solida. El trial gratuito da tiempo mas que suficiente para construir algo como esto de principio a fin y entender de verdad como funciona el dato en tiempo real.</p>
+<p>Si estás empezando en el mundo de los datos y quieres aprender herramientas con alta demanda en el mercado, Fabric es una apuesta solida. El trial gratuito da tiempo más que suficiente para construir algo como esto de principio a fin y entender de verdad como funciona el dato en tiempo real.</p>
 
 <hr>
 
