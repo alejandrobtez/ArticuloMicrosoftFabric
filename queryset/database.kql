@@ -1,0 +1,8 @@
+.create table EventosPartido (
+    timestamp: datetime, jornada: int, partido_id: string,
+    tipo_evento: string, minuto: int, equipo_local: string,
+    equipo_visitante: string, goles_local: int, goles_visitante: int,
+    jugador_id: int, jugador_nombre: string, equipo_jugador: string,
+    posicion: string, dorsal: int, titular: bool,
+    tipo_tarjeta: string, es_penalti: bool
+)
