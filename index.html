@@ -400,13 +400,13 @@
   <div class="article-meta">
     <span class="meta-category">Microsoft Fabric</span>
     <span class="meta-divider"></span>
-    <a href="https://www.linkedin.com/in/alejandrobtez" target="_blank" rel="noopener" style="font-size:13px;color:#107C41;text-decoration:none;font-weight:500;">Alejandro Ben&#237;tez Bern&#225;</a>
+    <a href="https://www.linkedin.com/in/alejandrobtez" target="_blank" rel="noopener" style="font-size:13px;color:#107C41;text-decoration:none;font-weight:500;">Alejandro Benítez Berná</a>
   </div>
 
   <h1>Cómo construí una liga de fútbol<br><em>en tiempo real</em> con Microsoft Fabric</h1>
 
   <p class="article-lead">
-    Un proyecto práctico para entender de verdad qué es el streaming de datos, por qué Microsoft Fabric cambia las reglas del juego y cómo KQL no es tan distinto de lo que ya conoces.
+    Un proyecto práctico para entender de verdad qué es el streaming de datos, por qué Microsoft Fabric reescribe las reglas del mundo de los datos y cómo KQL no es tan distinto de lo que ya conoces.
   </p>
 </header>
 
@@ -449,7 +449,7 @@
 </figure>
 
 <div class="callout">
-  <p><strong>Trial gratuito.</strong> Puedes activar el trial de 60 dias de Microsoft Fabric en app.fabric.microsoft.com con una cuenta de Microsoft. No requiere suscripción de Azure ni tarjeta de credito. Es suficiente para montar este proyecto completo.</p>
+  <p><strong>Trial gratuito.</strong> Puedes activar el trial de 60 días de Microsoft Fabric en app.fabric.microsoft.com con una cuenta de Microsoft. No requiere suscripción de Azure ni tarjeta de crédito. Es suficiente para montar este proyecto completo.</p>
 </div>
 
 
@@ -530,7 +530,7 @@
   </div>
   <div class="card blue-bg">
     <div class="card-title">Eventhouse</div>
-    <p>El almacén analítico. Guarda todos los eventos con indexación optimizada para consultas en tiempo real. Aqui viven los goles, tarjetas y la clasificación.</p>
+    <p>El almacén analítico. Guarda todos los eventos con indexación optimizada para consultas en tiempo real. Aquí viven los goles, las tarjetas y la clasificación.</p>
   </div>
 </div>
 
@@ -541,21 +541,21 @@
 <div class="section-divider">Paso 1</div>
 <h2>Montar la infraestructura en Fabric</h2>
 
-<p>Todo se hace desde la interfaz web de Fabric. No hay que tocar Azure ni escribir codigo de infraestructura. Son cuatro pasos consecutivos:</p>
+<p>Todo se hace desde la interfaz web de Fabric. No hay que tocar Azure ni escribir código de infraestructura. Son cuatro pasos consecutivos:</p>
 
 <ul class="steps">
   <li>
     <div class="step-dot">1</div>
     <div class="step-body">
       <strong>Crear el Workspace</strong>
-      <p>El contenedor de todos los recursos del proyecto. Equivale a una carpeta de trabajo en la nube. Usamos la licencia Trial gratuita de 60 dias.</p>
+      <p>El contenedor de todos los recursos del proyecto. Equivale a una carpeta de trabajo en la nube. Usamos la licencia Trial gratuita de 60 días.</p>
     </div>
   </li>
   <li>
     <div class="step-dot">2</div>
     <div class="step-body">
       <strong>Crear el Eventhouse</strong>
-      <p>La base de datos KQL. Al crearlo, Fabric genera automaticamente la base de datos interior. Activamos el Streaming Ingestion para que acepte datos en tiempo real.</p>
+      <p>La base de datos KQL. Al crearlo, Fabric genera automáticamente la base de datos interior. Activamos el Streaming Ingestion para que acepte datos en tiempo real.</p>
     </div>
   </li>
   <li>
@@ -586,11 +586,11 @@
 <div class="section-divider">Paso 2</div>
 <h2>El simulador de partidos en Python</h2>
 
-<p>El simulador es un Notebook de Python que vive dentro del propio Fabric. No hace falta instalar nada en el ordenador — todo corre en la nube sobre Apache Spark, que es el motor de procesamiento que usa Fabric internamente para ejecutar codigo.</p>
+<p>El simulador es un Notebook de Python que vive dentro del propio Fabric. No hace falta instalar nada en el ordenador —todo corre en la nube sobre Apache Spark, que es el motor de procesamiento que usa Fabric internamente para ejecutar código.</p>
 
-<p>El simulador genera 20 equipos con nombres reales de la liga espanola, 300 jugadores sinteticos distribuidos por posicion y dorsal, y simula una jornada completa de 10 partidos. Por cada accion que ocurre genera un mensaje JSON y lo envia al Event Hub.</p>
+<p>El simulador genera 20 equipos con nombres reales de la liga española, 300 jugadores sintéticos distribuidos por posición y dorsal, y simula una jornada completa de 10 partidos. Por cada acción que ocurre genera un mensaje JSON y lo envía al Event Hub.</p>
 
-<p>Una decisión interesante del diseno es la <strong>fuerza por equipo</strong>: cada club tiene un valor entre 0 y 1 que afecta a la probabilidad de que marque en cada accion. Esto permite controlar los resultados de la simulación, por ejemplo dando al Atlético de Madrid muchas mas opciones de ganar que al resto.</p>
+<p>Una decisión interesante del diseño es la <strong>fuerza por equipo</strong>: cada club tiene un valor entre 0 y 1 que afecta a la probabilidad de que marque en cada acción. Esto permite controlar los resultados de la simulación, por ejemplo dando al Atlético de Madrid muchas más opciones de ganar que al resto.</p>
 
 <p>Hay cinco tipos de evento que el simulador puede generar:</p>
 
@@ -631,7 +631,7 @@
 </svg>
 </div>
 
-<p>Cada evento viaja como un objeto JSON con toda la informacion relevante: el nombre del jugador, el equipo, el minuto, el marcador en ese momento. El nombre del jugador viaja <em>dentro</em> del evento, por lo que cuando llega al Eventhouse ya esta disponible para mostrarlo en el dashboard sin necesidad de cruzar tablas adicionales.</p>
+<p>Cada evento viaja como un objeto JSON con toda la información relevante: el nombre del jugador, el equipo, el minuto, el marcador en ese momento. El nombre del jugador viaja <em>dentro</em> del evento, por lo que cuando llega al Eventhouse ya está disponible para mostrarlo en el dashboard sin necesidad de cruzar tablas adicionales.</p>
 
 <div class="code-wrap">
   <div class="code-header">
@@ -659,7 +659,7 @@
 
 <figure style="margin:36px 0;">
   <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/main/img/simulation-outputs.png" alt="Notebook ejecutándose con los eventos en tiempo real" style="width:100%;display:block;border:1px solid #D8EDE2;">
-  <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">El Notebook generando y enviando eventos. Cada linea representa un mensaje JSON enviado al Event Hub.</figcaption>
+  <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">El Notebook generando y enviando eventos. Cada línea representa un mensaje JSON enviado al Event Hub.</figcaption>
 </figure>
 
 
@@ -669,9 +669,9 @@
 <div class="section-divider">Paso 3</div>
 <h2>KQL: consultas para datos en movimiento</h2>
 
-<p>Una vez que los datos estan en el Eventhouse los consultamos con <strong>KQL, Kusto Query Language</strong>. Si tienes experiencia con SQL la logica es muy parecida, pero la sintaxis cambia: en KQL las consultas se construyen como una cadena de transformaciones encadenadas con el operador <span class="badge">|</span>, lo que las hace muy legibles una vez que te acostumbras.</p>
+<p>Una vez que los datos están en el Eventhouse los consultamos con <strong>KQL, Kusto Query Language</strong>. Si tienes experiencia con SQL la lógica es muy parecida, pero la sintaxis cambia: en KQL las consultas se construyen como una cadena de transformaciones encadenadas con el operador <span class="badge">|</span>, lo que las hace muy legibles una vez que te acostumbras.</p>
 
-<h3>Por que KQL y no SQL</h3>
+<h3>Por qué KQL y no SQL</h3>
 
 <table class="compare">
   <thead>
@@ -712,9 +712,9 @@
 
 <h3>Las vistas materializadas</h3>
 
-<p>Este es el concepto mas importante del proyecto desde el punto de vista del rendimiento. Imagina que tras varias jornadas acumulas 100.000 eventos en la tabla principal. Si cada vez que el dashboard se refresca tuvieramos que recorrer todos esos registros para calcular quien es el maximo goleador, las consultas serian lentas e ineficientes.</p>
+<p>Este es el concepto más importante del proyecto desde el punto de vista del rendimiento. Imagina que tras varias jornadas acumulas 100.000 eventos en la tabla principal. Si cada vez que el dashboard se refresca tuviéramos que recorrer todos esos registros para calcular quién es el máximo goleador, las consultas serían lentas e ineficientes.</p>
 
-<p>Las <strong>vistas materializadas</strong> resuelven esto: son tablas de resumen que Fabric mantiene actualizadas de forma automatica con cada evento nuevo. Cuando llega un gol, la vista <span class="badge">GoleadoresAcum</span> se actualiza al instante. El dashboard consulta esa tabla resumida, no los 100.000 eventos originales.</p>
+<p>Las <strong>vistas materializadas</strong> resuelven esto: son tablas de resumen que Fabric mantiene actualizadas de forma automática con cada evento nuevo. Cuando llega un gol, la vista <span class="badge">GoleadoresAcum</span> se actualiza al instante. El dashboard consulta esa tabla resumida, no los 100.000 eventos originales.</p>
 
 <!-- DIAGRAMA SVG — vistas materializadas -->
 <div class="diagram-wrap">
@@ -772,11 +772,11 @@
 </svg>
 </div>
 
-<p>Creamos tres vistas materializadas: <span class="badge">GoleadoresAcum</span>, <span class="badge">AsistenciasAcum</span> y <span class="badge">TarjetasAcum</span>. Todas se crean con el parametro <span class="badge">backfill=true</span>, que indica a Fabric que al crear la vista procese tambien todos los datos historicos que ya existian en la tabla, no solo los nuevos.</p>
+<p>Creamos tres vistas materializadas: <span class="badge">GoleadoresAcum</span>, <span class="badge">AsistenciasAcum</span> y <span class="badge">TarjetasAcum</span>. Todas se crean con el parámetro <span class="badge">backfill=true</span>, que indica a Fabric que al crear la vista procese también todos los datos históricos que ya existían en la tabla, no solo los nuevos.</p>
 
 <figure style="margin:36px 0;">
   <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/main/img/kql-views.png" alt="KQL Queryset con las vistas materializadas" style="width:100%;display:block;border:1px solid #D8EDE2;">
-  <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">El KQL Queryset con las vistas materializadas en el panel de navegacion izquierdo.</figcaption>
+  <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">El KQL Queryset con las vistas materializadas en el panel de navegación izquierdo.</figcaption>
 </figure>
 
 
@@ -786,28 +786,28 @@
 <div class="section-divider">Paso 4</div>
 <h2>El Real-Time Dashboard</h2>
 
-<p>El ultimo paso es el <strong>Real-Time Dashboard</strong> de Fabric. A diferencia de Power BI, orientado al análisis historico, este tipo de dashboard esta diseñado para actualizar sus tiles de forma continua consultando directamente la KQL Database.</p>
+<p>El último paso es el <strong>Real-Time Dashboard</strong> de Fabric. A diferencia de Power BI, orientado al análisis histórico, este tipo de dashboard está diseñado para actualizar sus tiles de forma continua consultando directamente la KQL Database.</p>
 
-<p>Configuramos el auto-refresco a 30 segundos y creamos 12 tiles con distintos tipos de visualizacóon. La combinación de tablas con rankings, gráficos de líneas para ver la evolución de los equipos a lo largo de las jornadas, gráficos de barras para comparar estadísticas por club y tiles de número grande para los totales de la jornada da una vista completa del estado de la competición.</p>
+<p>Configuramos el auto-refresco a 30 segundos y creamos 12 tiles con distintos tipos de visualización. La combinación de tablas con rankings, gráficos de líneas para ver la evolución de los equipos a lo largo de las jornadas, gráficos de barras para comparar estadísticas por club y tiles de número grande para los totales de la jornada da una vista completa del estado de la competición.</p>
 
 <div class="grid2">
   <div class="card">
     <div class="card-title">Tiles de tabla</div>
-    <p>Clasificación, goleadores, asistencias, partidos en vivo, últimos goles y tarjetas. Se actualizan con los datos mas recientes del Eventhouse.</p>
+    <p>Clasificación, goleadores, asistencias, partidos en vivo, últimos goles y tarjetas. Se actualizan con los datos más recientes del Eventhouse.</p>
   </div>
   <div class="card">
-    <div class="card-title">Tiles de grafico</div>
+    <div class="card-title">Tiles de gráfico</div>
     <p>Evolución Top 5 en gráfico de líneas, goles por equipo y por tramo de minuto en barras, distribución de tipos de evento en gráfico de sectores.</p>
   </div>
 </div>
 
 <div class="callout">
-  <p>Con el dashboard abierto en una pestaña y el Notebook ejecutándose en otra, los tiles cambian visiblemente cada 30 segundos. La clasificación se reordena según los resultados y los goleadores escalan posiciones en tiempo real. Es el momento mas visual del proyecto.</p>
+  <p>Con el dashboard abierto en una pestaña y el Notebook ejecutándose en otra, los tiles cambian visiblemente cada 30 segundos. La clasificación se reordena según los resultados y los goleadores escalan posiciones en tiempo real. Es el momento más visual del proyecto.</p>
 </div>
 
 <figure style="margin:36px 0;">
   <img src="https://raw.githubusercontent.com/alejandrobtez/ArticuloMicrosoftFabric/main/img/data-report2.png" alt="Dashboard de partidos en directo con resultados y estadísticas en vivo" style="width:100%;display:block;border:1px solid #D8EDE2;">
-  <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">Dashboard de partidos en directo: porcentaje de eventos por tipo, resultados en juego y partidos finalizados, todo actualizandose cada 30 segundos.</figcaption>
+  <figcaption style="font-size:12px;color:#6B8A78;font-style:italic;padding:8px 0 0;">Dashboard de partidos en directo: porcentaje de eventos por tipo, resultados en juego y partidos finalizados, todo actualizándose cada 30 segundos.</figcaption>
 </figure>
 
 
@@ -816,7 +816,7 @@
 ════════════════════════════════════════ -->
 <h2>Por qué merece la pena aprender Microsoft Fabric</h2>
 
-<p>Esta es la pregunta más habitual cuando cuento este proyecto. Mi respuesta: porque permite construir cosas que antes requerían mucho mas conocimiento de infraestructura y varios servicios coordinados.</p>
+<p>Esta es la pregunta más habitual cuando cuento este proyecto. Mi respuesta: porque permite construir cosas que antes requerían mucho más conocimiento de infraestructura y varios servicios coordinados.</p>
 
 <ul class="steps">
   <li>
@@ -836,8 +836,8 @@
   <li>
     <div class="step-dot">3</div>
     <div class="step-body">
-      <strong>Trial gratuito de 60 dias</strong>
-      <p>Suficiente para aprender, construir un proyecto completo y tenerlo como referencia en el portfolio. No requiere suscripción de Azure ni tarjeta de credito.</p>
+      <strong>Trial gratuito de 60 días</strong>
+      <p>Suficiente para aprender, construir un proyecto completo y tenerlo como referencia en el portfolio. No requiere suscripción de Azure ni tarjeta de crédito.</p>
     </div>
   </li>
   <li>
@@ -853,7 +853,7 @@
 <!-- ════════════════════════════════════════
      TECNOLOGÍAS
 ════════════════════════════════════════ -->
-<h2>Tecnologias utilizadas</h2>
+<h2>Tecnologías utilizadas</h2>
 
 <p>El proyecto se construyó enteramente dentro de <strong>Microsoft Fabric</strong>, usando los siguientes componentes: Notebook de Python con PySpark como simulador, Eventstream para la ingesta en streaming, Eventhouse con KQL Database para el almacenamiento analítico, y Real-Time Dashboard para la visualización. Las consultas y vistas materializadas se escribieron en KQL.</p>
 
@@ -874,11 +874,11 @@
 ════════════════════════════════════════ -->
 <h2>Para terminar</h2>
 
-<p>Este proyecto demostró que con Microsoft Fabric es posible construir un pipeline completo de datos en tiempo real, desde la generación de eventos hasta la visualización, sin necesidad de gestionar infraestructura externa ni combinar multiples servicios de Azure por cuenta propia.</p>
+<p>Este proyecto demostró que con Microsoft Fabric es posible construir un pipeline completo de datos en tiempo real, desde la generación de eventos hasta la visualización, sin necesidad de gestionar infraestructura externa ni combinar múltiples servicios de Azure por cuenta propia.</p>
 
-<p>Lo más valioso del proceso no fué solo el resultado final, sino todo lo que queda claro por el camino: como funciona el streaming de datos, por qué KQL es la herramienta correcta para este tipo de casos, que son las vistas materializadas y como Fabric integra todas las piezas en una sola plataforma coherente.</p>
+<p>Lo más valioso del proceso no fue solo el resultado final, sino todo lo que queda claro por el camino: cómo funciona el streaming de datos, por qué KQL es la herramienta correcta para este tipo de casos, qué son las vistas materializadas y cómo Fabric integra todas las piezas en una sola plataforma coherente.</p>
 
-<p>Si estás empezando en el mundo de los datos y quieres aprender herramientas con alta demanda en el mercado, Fabric es una apuesta solida. El trial gratuito da tiempo más que suficiente para construir algo como esto de principio a fin y entender de verdad como funciona el dato en tiempo real.</p>
+<p>Si estás empezando en el mundo de los datos y quieres aprender herramientas con alta demanda en el mercado, Fabric es una apuesta sólida. El trial gratuito da tiempo más que suficiente para construir algo como esto de principio a fin y entender de verdad cómo funciona el dato en tiempo real.</p>
 
 <hr>
 
