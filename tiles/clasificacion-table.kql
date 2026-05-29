@@ -1,0 +1,19 @@
+let finales = EventosPartido | where tipo_evento == "final"
+    | project partido_id, equipo_local, equipo_visitante, goles_local, goles_visitante;
+let local_s = finales | project equipo=equipo_local,
+    pj=1, pg=iff(goles_local>goles_visitante,1,0),
+    pe=iff(goles_local==goles_visitante,1,0),
+    pp=iff(goles_local<goles_visitante,1,0),
+    gf=goles_local, gc=goles_visitante;
+let visit_s = finales | project equipo=equipo_visitante,
+    pj=1, pg=iff(goles_visitante>goles_local,1,0),
+    pe=iff(goles_visitante==goles_local,1,0),
+    pp=iff(goles_visitante<goles_local,1,0),
+    gf=goles_visitante, gc=goles_local;
+union local_s, visit_s
+| summarize PJ=sum(pj), PG=sum(pg), PE=sum(pe), PP=sum(pp),
+    GF=sum(gf), GC=sum(gc) by equipo
+| extend Pts=PG*3+PE, DG=GF-GC
+| sort by Pts desc, DG desc, GF desc
+| extend Pos=row_number()
+| project Pos, Equipo=equipo, PJ, PG, PE, PP, GF, GC, DG, Pts
