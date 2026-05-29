@@ -1,0 +1,9 @@
+.create-or-alter materialized-view with (backfill=true) GoleadoresAcum on table EventosPartido
+{
+    EventosPartido
+    | where tipo_evento == "gol"
+    | summarize
+        goles = count(),
+        penaltis = countif(es_penalti == true)
+        by jugador_id, jugador_nombre, equipo_jugador, posicion, dorsal
+}
