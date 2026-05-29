@@ -1,0 +1,4 @@
+EventosPartido
+| where tipo_evento == "gol"
+| summarize Goles=count() by Equipo=equipo_jugador
+| sort by Goles desc
