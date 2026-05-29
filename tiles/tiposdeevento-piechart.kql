@@ -1,0 +1,3 @@
+EventosPartido
+| where tipo_evento in ("gol", "asistencia", "tarjeta")
+| summarize Total=count() by Tipo=tipo_evento
