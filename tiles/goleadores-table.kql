@@ -1,0 +1,7 @@
+GoleadoresAcum
+| sort by goles desc, penaltis asc
+| extend Pos=row_number(), goles_campo=goles-penaltis
+| project Pos, Jugador=jugador_nombre, Dorsal=dorsal,
+    Equipo=equipo_jugador, Posicion=posicion,
+    Goles=goles, ["En juego"]=goles_campo, Penaltis=penaltis
+| take 20
