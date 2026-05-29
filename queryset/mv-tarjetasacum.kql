@@ -1,0 +1,9 @@
+.create-or-alter materialized-view with (backfill=true) TarjetasAcum on table EventosPartido
+{
+    EventosPartido
+    | where tipo_evento == "tarjeta"
+    | summarize
+        amarillas = countif(tipo_tarjeta == "amarilla"),
+        rojas = countif(tipo_tarjeta == "roja")
+        by jugador_id, jugador_nombre, equipo_jugador, posicion
+}
